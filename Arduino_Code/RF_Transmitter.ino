@@ -1,30 +1,29 @@
-/*
-* RF_Transmitter.ino
-* Adapted from Code by Dejan Nedelkvoski, www.HowToMechatronics.com
-*
-* Adapted for use in UGA's MCHE 4911 Capstone. 
-* 
-* Library: TMRh20/RF24, https://github.com/tmrh20/RF24/
-*/
-
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
 
-RF24 radio(7, 8); // CE, CSN
+RF24 radio(7,8); // Define the CE and CSN pins
 
-const byte address[6] = "00001";
+const byte address[6] = "00001"; // Address of SPI
 
+// Function to Setup the Arduino
 void setup() {
+  Serial.begin(9600); // Setup Serial Output
+
+  // Begin the Radio Object and Setup
   radio.begin();
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_MAX); // Could be RF24_PA_MIN
+  radio.setDataRate(RF24_250KBPS); // Is this necessary?
   radio.stopListening();
+
+  Serial.println("start"); // Communicate to user that program has begun
 }
 
+// Loop to be done indefinitely
 void loop() {
-  const char text[] = "Hello World";
-  radio.write(&text, sizeof(text));
-  delay(1000);
+  Serial.println("Top of Loop");    // Communicate Position in loop to user
+  const char text[] = "nrftest";    // Define text to send
+  radio.write(&text, sizeof(text)); // Send the above char
+  delay(500);                       // Delat half a second and repeat
 }
-
