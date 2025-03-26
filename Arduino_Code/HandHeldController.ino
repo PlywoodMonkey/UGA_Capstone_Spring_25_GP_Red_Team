@@ -6,8 +6,12 @@
 *  The following code is used to control whether the claw on the drone attachment is opening or closing. Two LEDs are 
 *  used to signify the correct output of voltage to the motor.
 *
-*  Currently turns on only one LED at a time, either the Green, Red, or Yellow one. Proof of concept for the handheld controller
-*  as it is controlled by output GPIO pins which will go to the battery and stepper motor. 
+*  Behaves almost perfectly, now counts the (estimated) degrees that the claw is at and outputs a voltage to the according LED.
+*  It also tells the user when they have completely opened or closed the arm, which is shown by the lighting of the yellow LED.
+*
+*  Left Button  - "Opens the Claw" (Outputs a high to the LED from GPIO 2).
+*  Right Button - "Closes the Claw" (Outputs a high to the LED from GPIO 4).
+*  Yellow LED   - Signifies that the user has either completely opened or closed the claw.
 */
 
 // Create variables for ease of changing pins
@@ -16,6 +20,8 @@ int yellowLEDOutput = 3; // Yellow Dupont
 int redLEDOutput    = 4; // Red Dupont
 int greenLEDInput   = 5; // Orange Dupont
 int redLEDInput     = 6; // Purple Dupont
+
+double degreesRotated  = 45;
 
 
 // Code for the setup
@@ -37,14 +43,44 @@ void setup() {
 void loop() {
 
   if ((digitalRead(greenLEDInput) && digitalRead(redLEDInput)) == 1) {
-    Serial.println("Both buttons are pushed: Do Nothing");
-    turnOnYellowLED();
+
+    Serial.print(degreesRotated);
+    Serial.println(" : Claw is not moving (BOTH BUTTONS PUSHED)");
+
   } else if (digitalRead(greenLEDInput) == 1) {
-    Serial.println("The Green LED is pushed");    
-    turnOnGreenLED();
+    
+    if (degreesRotated < 90){
+      degreesRotated += .5;
+      Serial.print(degreesRotated);
+      Serial.println(" : Opening Claw (GREEN LED ON)");    
+      turnOnGreenLED();
+    } else if (degreesRotated == 90) {
+      Serial.println("Claw is Fully Closed");
+      turnOnYellowLED();
+    }
+
   } else if (digitalRead(redLEDInput) == 1) {
-    Serial.println("The Red LED is pushed");
-    turnOnRedLED();
+
+    if (degreesRotated > 0){
+      degreesRotated -= .5;
+      Serial.print(degreesRotated);
+      Serial.println(" : Closing Claw (RED LED ON)");
+      turnOnRedLED();
+    } else if (degreesRotated == 0) {
+      Serial.println("Claw is Fully Opened");
+      turnOnYellowLED();
+    }
+
+  } else if (degreesRotated == 0) {
+    
+    Serial.println("Claw is Fully Opened");
+    turnOnYellowLED();
+
+  } else if (degreesRotated == 90) {
+
+    Serial.println("Claw is Fully Closed");
+    turnOnYellowLED();
+
   } else {
     turnOffAllLEDs();  
   }// end of if/else-if/else
