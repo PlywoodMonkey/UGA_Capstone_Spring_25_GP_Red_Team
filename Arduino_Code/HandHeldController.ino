@@ -6,25 +6,33 @@
 *  The following code is used to control whether the claw on the drone attachment is opening or closing. Two LEDs are 
 *  used to signify the correct output of voltage to the motor.
 *
-*  Currently, it outputs whether or not the button lights the LEDs by placing either a 0 or 1 in the Serial output.
+*  Currently, it only tells the user when they are pushing a button, but will send an error message if they push both 
+*  at the same time.
 */
 
+// Create variables for ease of changing pins
 int greenLED = 6;
 int redLED = 5;
 
 void setup() {
-  // put your setup code here, to run once:
 
-  Serial.begin(9600); // Setup Serial Output
-  pinMode(greenLED, INPUT);
-  pinMode(redLED, INPUT);
-  Serial.println("start"); // Communicate to user that program has begun
-}
+  Serial.begin(9600);       // Setup the Serial Output
+
+  pinMode(greenLED, INPUT); // Setup the current GPIO pin for the Green LED as an input
+  pinMode(redLED, INPUT);   // Setup the current GPIO pin for the Red LED as an input
+
+  Serial.println("start");  // Communicate to user that program has begun
+} // end of setup
+
 
 void loop() {
 
-  // put your main code here, to run repeatedly:
-  Serial.println(digitalRead(greenLED));
-  Serial.println(digitalRead(redLED));
+  if ((digitalRead(greenLED) && digitalRead(redLED)) == 1) {
+    Serial.println("Both buttons are pushed: Do Nothing");
+  } else if (digitalRead(greenLED) == 1) {
+    Serial.println("The Green LED is pushed");
+  } else if (digitalRead(redLED) == 1) {
+    Serial.println("The Red LED is pushed");
+  } // end of if/else-if
 
-}
+} // end of loop
