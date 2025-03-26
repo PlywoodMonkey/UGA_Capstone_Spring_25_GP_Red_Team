@@ -46,6 +46,7 @@ void loop() {
 
     Serial.print(degreesRotated);
     Serial.println(" : Claw is not moving (BOTH BUTTONS PUSHED)");
+    turnOnYellowLED();
 
   } else if (digitalRead(greenLEDInput) == 1) {
     
@@ -55,7 +56,7 @@ void loop() {
       Serial.println(" : Opening Claw (GREEN LED ON)");    
       turnOnGreenLED();
     } else if (degreesRotated == 90) {
-      Serial.println("Claw is Fully Closed");
+      Serial.println("Claw is Fully Opened");
       turnOnYellowLED();
     }
 
@@ -67,18 +68,18 @@ void loop() {
       Serial.println(" : Closing Claw (RED LED ON)");
       turnOnRedLED();
     } else if (degreesRotated == 0) {
-      Serial.println("Claw is Fully Opened");
+      Serial.println("Claw is Fully Closed");
       turnOnYellowLED();
     }
 
   } else if (degreesRotated == 0) {
     
-    Serial.println("Claw is Fully Opened");
+    Serial.println("Claw is Fully Closed");
     turnOnYellowLED();
 
   } else if (degreesRotated == 90) {
 
-    Serial.println("Claw is Fully Closed");
+    Serial.println("Claw is Fully Opened");
     turnOnYellowLED();
 
   } else {
