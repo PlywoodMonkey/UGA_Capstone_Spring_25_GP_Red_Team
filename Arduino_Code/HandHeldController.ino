@@ -3,9 +3,10 @@
 *  Author - Samuel Brewster
 *  Class  - MCHE 4911
 *
-*  The following code is used to control whether the claw on the drone attachment
-*  is opening or closing. Two LEDs are used to signify the correct output of voltage 
-*  to the motor.
+*  The following code is used to control whether the claw on the drone attachment is opening or closing. Two LEDs are 
+*  used to signify the correct output of voltage to the motor.
+*
+*  Currently, it outputs whether or not the button lights the LEDs by placing either a 0 or 1 in the Serial output.
 */
 
 int greenLED = 6;
