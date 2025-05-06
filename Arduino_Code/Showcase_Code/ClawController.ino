@@ -1,3 +1,11 @@
+/* 
+*  File   - ClawController.ino
+*  Author - Samuel Brewster
+*  Class  - MCHE 4911
+*
+*  The following code is used to output the correct signal to the motor for the claw.
+*/
+
 #include <Servo.h>
 
 Servo myservo;  // create servo object to control a servo
