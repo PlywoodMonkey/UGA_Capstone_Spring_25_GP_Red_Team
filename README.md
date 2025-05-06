@@ -5,9 +5,9 @@ Welcome!
 This is the Github for the Georgia Power Red Team for the University of Georgia's 2024-2025 Mechanical Engineering Capstone Team!
 
 You will find multiple folders in this repository:
- 	1. Arduino Code - Home to all of the code that we have tested with and finalized.
-  	2. CAD Files - As the entirety of this project is 3D Printed, we have all of the CAD Files from it stored here.
-   	3. Showcase_Materials - Here are all powerpoints and posters that we used at the 2025 Engineering Capstone Showcase.
+1. Arduino Code - Home to all of the code that we have tested with and finalized.
+2. CAD Files - As the entirety of this project is 3D Printed, we have all of the CAD Files from it stored here.
+3. Showcase_Materials - Here are all powerpoints and posters that we used at the 2025 Engineering Capstone Showcase.
 
 
 
